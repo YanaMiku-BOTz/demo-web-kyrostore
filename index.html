@@ -9,12 +9,12 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
         :root {
-            --dark-bg: #111e3b; /* Warna biru gelap baru */
-            --purple-accent: #007bff; /* Warna biru cerah baru */
-            --light-purple: #3498db; /* Warna biru muda baru */
+            --dark-bg: #111e3b;
+            --purple-accent: #007bff;
+            --light-purple: #3498db;
             --text-color: #f0f0f0;
-            --card-bg: #1c2d52; /* Warna card biru gelap baru */
-            --border-color: #3b507d; /* Warna border biru baru */
+            --card-bg: #1c2d52;
+            --border-color: #3b507d;
         }
 
         * {
@@ -30,7 +30,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, var(--dark-bg) 0%, #0a0a20 100%); /* Latar belakang gradasi biru */
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #0a0a20 100%);
             color: var(--text-color);
             line-height: 1.6;
             padding: 20px 10px;
@@ -117,7 +117,7 @@
             left: 5px;
             height: calc(100% - 10px);
             width: calc(50% - 5px);
-            background: linear-gradient(90deg, var(--purple-accent), #4a86e0); /* Gradasi biru baru untuk slider */
+            background: linear-gradient(90deg, var(--purple-accent), #4a86e0);
             border-radius: 50px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
@@ -355,6 +355,7 @@
             border-radius: 15px;
             padding: 10px;
             transition: transform 0.3s ease-in-out;
+            cursor: pointer; /* Menambahkan cursor pointer */
         }
         
         .product-item:hover {
@@ -464,6 +465,128 @@
             opacity: 1;
             visibility: visible;
         }
+
+        /* --- POPUP CARD STYLES --- */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none; /* Defaultnya tersembunyi */
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .popup-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .popup-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .popup-overlay.show .popup-card {
+            transform: scale(1);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .popup-close:hover {
+            color: var(--text-color);
+        }
+
+        .popup-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border: 2px solid var(--border-color);
+        }
+
+        .popup-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .popup-description {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .popup-price-list {
+            width: 100%;
+        }
+
+        .popup-price-list h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: left;
+            margin-bottom: 10px;
+            color: var(--light-purple);
+        }
+
+        .price-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .price-item {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .price-item:hover {
+            background-color: #3b507d;
+            transform: translateY(-3px);
+        }
+        
+        .price-item-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .price-item-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #55acee; /* Warna harga yang cerah */
+        }
     </style>
 </head>
 <body>
@@ -570,27 +693,27 @@
             <div class="category-section">
                 <h2 class="section-title">Category A</h2>
                 <div class="product-grid" id="productGridA">
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productA1')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 1" class="product-item-img">
                         <p class="product-item-name">Product A1</p>
                     </a>
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productA2')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 2" class="product-item-img">
                         <p class="product-item-name">Product A2</p>
                     </a>
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productA3')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 3" class="product-item-img">
                         <p class="product-item-name">Product A3</p>
                     </a>
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productA4')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 4" class="product-item-img">
                         <p class="product-item-name">Product A4</p>
                     </a>
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productA5')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 5" class="product-item-img">
                         <p class="product-item-name">Product A5</p>
                     </a>
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productA6')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 6" class="product-item-img">
                         <p class="product-item-name">Product A6</p>
                     </a>
@@ -600,27 +723,27 @@
             <div class="category-section">
                 <h2 class="section-title">Category B</h2>
                 <div class="product-grid" id="productGridB">
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productB1')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 7" class="product-item-img">
                         <p class="product-item-name">Product B1</p>
                     </a>
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productB2')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 8" class="product-item-img">
                         <p class="product-item-name">Product B2</p>
                     </a>
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productB3')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 9" class="product-item-img">
                         <p class="product-item-name">Product B3</p>
                     </a>
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productB4')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 10" class="product-item-img">
                         <p class="product-item-name">Product B4</p>
                     </a>
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productB5')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 11" class="product-item-img">
                         <p class="product-item-name">Product B5</p>
                     </a>
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productB6')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 12" class="product-item-img">
                         <p class="product-item-name">Product B6</p>
                     </a>
@@ -630,27 +753,27 @@
             <div class="category-section">
                 <h2 class="section-title">Category C</h2>
                 <div class="product-grid" id="productGridC">
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productC1')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 13" class="product-item-img">
                         <p class="product-item-name">Product C1</p>
                     </a>
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productC2')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 14" class="product-item-img">
                         <p class="product-item-name">Product C2</p>
                     </a>
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productC3')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 15" class="product-item-img">
                         <p class="product-item-name">Product C3</p>
                     </a>
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productC4')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 16" class="product-item-img">
                         <p class="product-item-name">Product C4</p>
                     </a>
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productC5')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 17" class="product-item-img">
                         <p class="product-item-name">Product C5</p>
                     </a>
-                    <a href="#" class="product-item">
+                    <a class="product-item" onclick="showProductPopup('productC6')">
                         <img src="https://github.com/YanaMiku-Project/database-public/blob/main/image/logo.jpg?raw=true" alt="Product 18" class="product-item-img">
                         <p class="product-item-name">Product C6</p>
                     </a>
@@ -665,7 +788,201 @@
     <a id="backToTopBtn" href="#"><i class="fas fa-chevron-up"></i></a>
 </div>
 
+<div id="productPopup" class="popup-overlay">
+    <div class="popup-card">
+        <i class="fas fa-times popup-close" onclick="closeProductPopup()"></i>
+        <img id="popupImage" src="" alt="Product Image" class="popup-image">
+        <h2 id="popupTitle" class="popup-title"></h2>
+        <p id="popupDescription" class="popup-description"></p>
+        
+        <div class="popup-price-list">
+            <h3>Daftar Harga</h3>
+            <div id="priceGrid" class="price-grid">
+                </div>
+        </div>
+    </div>
+</div>
 <script>
+    // Data produk dummy
+    const productsData = {
+        'productA1': {
+            title: 'Product A1',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Ini adalah deskripsi lengkap untuk Produk A1. Dapatkan harga terbaik dan penawaran spesial hanya di toko kami. Produk ini tersedia dengan berbagai pilihan harga.',
+            prices: [
+                { name: '50 Diamonds', value: 'Rp 10.000', link: '#' },
+                { name: '100 Diamonds', value: 'Rp 20.000', link: '#' },
+                { name: '200 Diamonds', value: 'Rp 40.000', link: '#' },
+                { name: '500 Diamonds', value: 'Rp 100.000', link: '#' },
+            ]
+        },
+        'productA2': {
+            title: 'Product A2',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Deskripsi panjang untuk Produk A2. Kualitas terbaik dengan harga terjangkau. Cocok untuk semua kebutuhan Anda.',
+            prices: [
+                { name: 'Item 1', value: 'Rp 5.000', link: '#' },
+                { name: 'Item 2', value: 'Rp 8.000', link: '#' },
+                { name: 'Item 3', value: 'Rp 12.000', link: '#' },
+            ]
+        },
+        'productA3': {
+            title: 'Product A3',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Detail lengkap Produk A3. Nikmati fitur premium dengan harga spesial. Beli sekarang juga!',
+            prices: [
+                { name: 'Paket Basic', value: 'Rp 25.000', link: '#' },
+                { name: 'Paket Pro', value: 'Rp 50.000', link: '#' },
+            ]
+        },
+        'productA4': {
+            title: 'Product A4',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Deskripsi Produk A4.',
+            prices: [
+                { name: '1 Unit', value: 'Rp 1.000', link: '#' },
+                { name: '5 Unit', value: 'Rp 4.500', link: '#' },
+            ]
+        },
+        'productA5': {
+            title: 'Product A5',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Deskripsi Produk A5.',
+            prices: [
+                { name: 'Paket X', value: 'Rp 15.000', link: '#' },
+                { name: 'Paket Y', value: 'Rp 30.000', link: '#' },
+            ]
+        },
+        'productA6': {
+            title: 'Product A6',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Deskripsi Produk A6.',
+            prices: [
+                { name: 'Langganan Bulanan', value: 'Rp 75.000', link: '#' },
+                { name: 'Langganan Tahunan', value: 'Rp 750.000', link: '#' },
+            ]
+        },
+        'productB1': {
+            title: 'Product B1',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Deskripsi Produk B1.',
+            prices: [
+                { name: 'Opsi 1', value: 'Rp 2.500', link: '#' },
+                { name: 'Opsi 2', value: 'Rp 5.000', link: '#' },
+                { name: 'Opsi 3', value: 'Rp 10.000', link: '#' },
+            ]
+        },
+        'productB2': {
+            title: 'Product B2',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Deskripsi Produk B2.',
+            prices: [
+                { name: 'Promo B2', value: 'Rp 5.000', link: '#' },
+                { name: 'Standar B2', value: 'Rp 7.500', link: '#' },
+            ]
+        },
+        'productB3': {
+            title: 'Product B3',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Deskripsi Produk B3.',
+            prices: [
+                { name: 'Small', value: 'Rp 1.000', link: '#' },
+                { name: 'Medium', value: 'Rp 2.000', link: '#' },
+                { name: 'Large', value: 'Rp 3.000', link: '#' },
+            ]
+        },
+        'productB4': {
+            title: 'Product B4',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Deskripsi Produk B4.',
+            prices: [
+                { name: 'Opsi A', value: 'Rp 20.000', link: '#' },
+                { name: 'Opsi B', value: 'Rp 35.000', link: '#' },
+            ]
+        },
+        'productB5': {
+            title: 'Product B5',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Deskripsi Produk B5.',
+            prices: [
+                { name: 'Level 1', value: 'Rp 5.000', link: '#' },
+                { name: 'Level 2', value: 'Rp 9.000', link: '#' },
+                { name: 'Level 3', value: 'Rp 15.000', link: '#' },
+            ]
+        },
+        'productB6': {
+            title: 'Product B6',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Deskripsi Produk B6.',
+            prices: [
+                { name: 'Paket X', value: 'Rp 10.000', link: '#' },
+                { name: 'Paket Y', value: 'Rp 20.000', link: '#' },
+                { name: 'Paket Z', value: 'Rp 30.000', link: '#' },
+            ]
+        },
+        'productC1': {
+            title: 'Product C1',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Deskripsi Produk C1.',
+            prices: [
+                { name: 'Bronze', value: 'Rp 1.000', link: '#' },
+                { name: 'Silver', value: 'Rp 2.000', link: '#' },
+                { name: 'Gold', value: 'Rp 3.000', link: '#' },
+            ]
+        },
+        'productC2': {
+            title: 'Product C2',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Deskripsi Produk C2.',
+            prices: [
+                { name: '1 hari', value: 'Rp 5.000', link: '#' },
+                { name: '7 hari', value: 'Rp 25.000', link: '#' },
+                { name: '30 hari', value: 'Rp 80.000', link: '#' },
+            ]
+        },
+        'productC3': {
+            title: 'Product C3',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Deskripsi Produk C3.',
+            prices: [
+                { name: 'Opsi A', value: 'Rp 10.000', link: '#' },
+                { name: 'Opsi B', value: 'Rp 15.000', link: '#' },
+                { name: 'Opsi C', value: 'Rp 20.000', link: '#' },
+            ]
+        },
+        'productC4': {
+            title: 'Product C4',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Deskripsi Produk C4.',
+            prices: [
+                { name: 'Paket 1', value: 'Rp 5.000', link: '#' },
+                { name: 'Paket 2', value: 'Rp 10.000', link: '#' },
+                { name: 'Paket 3', value: 'Rp 15.000', link: '#' },
+            ]
+        },
+        'productC5': {
+            title: 'Product C5',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Deskripsi Produk C5.',
+            prices: [
+                { name: 'Basic', value: 'Rp 8.000', link: '#' },
+                { name: 'Premium', value: 'Rp 16.000', link: '#' },
+            ]
+        },
+        'productC6': {
+            title: 'Product C6',
+            image: 'https://github.com/YanaMiku-Project/database-public/blob/main/image/cover.png?raw=true',
+            description: 'Deskripsi Produk C6.',
+            prices: [
+                { name: 'S', value: 'Rp 1.000', link: '#' },
+                { name: 'M', value: 'Rp 2.000', link: '#' },
+                { name: 'L', value: 'Rp 3.000', link: '#' },
+                { name: 'XL', value: 'Rp 4.000', link: '#' },
+            ]
+        }
+    };
+
+
     function openTab(tabName, clickedButton) {
         const tabs = document.getElementsByClassName('tab-content');
         const tabButtons = document.getElementsByClassName('tab-button');
@@ -700,6 +1017,46 @@
         } else if (tabName === 'product') {
             toggleSlider.style.transform = 'translateX(100%)';
         }
+    }
+
+    function showProductPopup(productId) {
+        const product = productsData[productId];
+        if (!product) {
+            console.error('Product not found:', productId);
+            return;
+        }
+
+        // Isi data ke dalam pop-up
+        document.getElementById('popupImage').src = product.image;
+        document.getElementById('popupTitle').textContent = product.title;
+        document.getElementById('popupDescription').textContent = product.description;
+        
+        // Buat daftar harga
+        const priceGrid = document.getElementById('priceGrid');
+        priceGrid.innerHTML = ''; // Kosongkan daftar harga sebelumnya
+        
+        product.prices.forEach(price => {
+            const priceItem = document.createElement('a');
+            priceItem.href = price.link;
+            priceItem.target = '_blank';
+            priceItem.classList.add('price-item');
+            
+            priceItem.innerHTML = `
+                <p class="price-item-name">${price.name}</p>
+                <p class="price-item-value">${price.value}</p>
+            `;
+            
+            priceGrid.appendChild(priceItem);
+        });
+
+        // Tampilkan pop-up
+        document.getElementById('productPopup').classList.add('show');
+        document.body.style.overflow = 'hidden'; // Nonaktifkan scroll halaman utama
+    }
+
+    function closeProductPopup() {
+        document.getElementById('productPopup').classList.remove('show');
+        document.body.style.overflow = 'auto'; // Aktifkan kembali scroll
     }
 
     function filterProducts() {
