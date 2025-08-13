@@ -9,12 +9,12 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
         :root {
-            --dark-bg: #3e1a1a;
-            --purple-accent: #c70039;
-            --light-purple: #ff6b6b;
+            --dark-bg: #111e3b; /* Warna biru gelap baru */
+            --purple-accent: #007bff; /* Warna biru cerah baru */
+            --light-purple: #3498db; /* Warna biru muda baru */
             --text-color: #f0f0f0;
-            --card-bg: #542c2c;
-            --border-color: #7a4a4a;
+            --card-bg: #1c2d52; /* Warna card biru gelap baru */
+            --border-color: #3b507d; /* Warna border biru baru */
         }
 
         * {
@@ -30,7 +30,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--dark-bg);
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #0a0a20 100%); /* Latar belakang gradasi biru */
             color: var(--text-color);
             line-height: 1.6;
             padding: 20px 10px;
@@ -117,7 +117,7 @@
             left: 5px;
             height: calc(100% - 10px);
             width: calc(50% - 5px);
-            background: linear-gradient(90deg, var(--purple-accent), #d64545);
+            background: linear-gradient(90deg, var(--purple-accent), #4a86e0); /* Gradasi biru baru untuk slider */
             border-radius: 50px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
